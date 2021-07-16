@@ -1,4 +1,4 @@
-name: per
+name: pct
 version: "0.0.1"
 author: Ryan Li <conbas2019@gmail.com>
 about: a percent-encoding processor
