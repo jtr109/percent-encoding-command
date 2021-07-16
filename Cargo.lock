@@ -26,14 +26,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 
 [[package]]
-name = "buz"
-version = "0.1.0"
-dependencies = [
- "clap",
- "percent-encoding",
-]
-
-[[package]]
 name = "clap"
 version = "3.0.0-beta.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -123,6 +115,14 @@ name = "os_str_bytes"
 version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "afb2e1c3ee07430c2cf76151675e583e0f19985fa6efae47d6848a3e2c824f85"
+
+[[package]]
+name = "per"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "percent-encoding",
+]
 
 [[package]]
 name = "percent-encoding"
