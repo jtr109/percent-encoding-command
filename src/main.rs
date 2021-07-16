@@ -15,15 +15,6 @@ fn main() -> Result<()> {
         }
         None => Box::new(io::stdin()),
     };
-    let mut input = String::new();
-    reader.read_to_string(&mut input)?;
-
-    let result = if matches.is_present("decode") {
-        percent_decode_str(&input).decode_utf8()?.to_string()
-    } else {
-        utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string()
-    };
-
     let mut writer: Box<dyn Write> = match matches.value_of("output") {
         Some(path) => {
             let file = std::fs::OpenOptions::new()
@@ -34,6 +25,28 @@ fn main() -> Result<()> {
         }
         None => Box::new(io::stdout()),
     };
-    writer.write(result.as_bytes())?;
+    if matches.is_present("decode") {
+        decode(&mut reader, &mut writer)?;
+    } else {
+        encode(&mut reader, &mut writer)?;
+    }
     Ok(())
 }
+
+fn encode(reader: &mut dyn Read, writer: &mut dyn Write) -> Result<()> {
+    let mut input = String::new();
+    reader.read_to_string(&mut input)?;
+    let encoded = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
+    writer.write(encoded.as_bytes())?;
+    Ok(())
+}
+
+fn decode(reader: &mut dyn Read, writer: &mut dyn Write) -> Result<()> {
+    let mut input = String::new();
+    reader.read_to_string(&mut input)?;
+    let decoded = percent_decode_str(&input).decode_utf8()?.to_string();
+    writer.write(decoded.as_bytes())?;
+    Ok(())
+}
+
+// TODO: https://rust-cli.github.io/book/tutorial/testing.html
