@@ -22,10 +22,29 @@ fn main() -> Result<()> {
             buffer
         }
     };
-    let output = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
-    let mut out = io::stdout();
-    out.write_all(&output.as_bytes())
-        .context("failed writing into stdout")?;
+    let result = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
+
+    let mut output: Box<dyn Write> = match matches.value_of("output") {
+        Some(path) => {
+            let file = std::fs::OpenOptions::new()
+                .write(true)
+                .create_new(true)
+                .open(path)?;
+            Box::new(file)
+        }
+        None => {
+            Box::new(io::stdout())
+            // let mut buffer = String::new();
+            // io::stdin()
+            //     .read_to_string(&mut buffer)
+            //     .context("failed reading from stdin")?;
+            // buffer
+        }
+    };
+    output.write(result.as_bytes())?;
+    // let mut out = io::stdout();
+    // out.write_all(&result.as_bytes())
+    //     .context("failed writing into stdout")?;
     Ok(())
 }
 
