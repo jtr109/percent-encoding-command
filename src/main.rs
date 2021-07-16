@@ -1,6 +1,5 @@
 use buz::percent::percent_encode;
 use clap::{load_yaml, App};
-use std::str;
 
 fn main() {
     let yaml = load_yaml!("cli.yml");
