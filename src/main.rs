@@ -5,7 +5,7 @@ use std::io::{self, Read, Write};
 
 fn main() -> Result<()> {
     let yaml = load_yaml!("cli.yml");
-    let app = App::from(yaml);
+    let app = App::from(yaml).version(env!("CARGO_PKG_VERSION"));
     let matches = app.clone().get_matches();
 
     let mut reader: Box<dyn Read> = match matches.value_of("input") {
