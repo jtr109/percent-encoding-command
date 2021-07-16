@@ -1,25 +1,22 @@
-name: buz
+name: per
 version: "0.0.1"
 author: Ryan Li <conbas2019@gmail.com>
-about: Buzz is an clever encoder.
-subcommands:
-  - percent:
-      about: "a percent-encoding tool"
-      args:
-        - decode:
-            short: d
-            about: decodes input
-        - break:
-            short: b
-            about: break encoded string into num character lines
-        - input:
-            short: i
-            about: input file (default from stdin)
-            takes_value: true
-        - output:
-            short: o
-            about: output file (default into stdout)
-            takes_value: true
+about: a percent-encoding processor
+args:
+  - decode:
+      short: d
+      about: decodes input
+  - break:
+      short: b
+      about: break encoded string into num character lines
+  - input:
+      short: i
+      about: input file (default from stdin)
+      takes_value: true
+  - output:
+      short: o
+      about: output file (default into stdout)
+      takes_value: true
   # - INPUT:
   #     required: true
   #     index: 1

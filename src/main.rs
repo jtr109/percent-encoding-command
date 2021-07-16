@@ -1,15 +1,29 @@
-use buz::percent::percent_encode;
 use clap::{load_yaml, App};
+use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
+use std::{
+    fs,
+    io::{self, Read, Write},
+};
 
 fn main() {
     let yaml = load_yaml!("cli.yml");
     let app = App::from(yaml);
     let matches = app.clone().get_matches();
 
-    match matches.subcommand() {
-        Some(("percent", sub_m)) => percent_encode(sub_m),
-        _ => eprintln!("{}: SUBCOMMAND is required", env!("CARGO_PKG_NAME")),
+    let input = match matches.value_of("input") {
+        Some(path) => fs::read_to_string(path).expect("cannot read input file"),
+        None => {
+            let mut buffer = String::new();
+            io::stdin()
+                .read_to_string(&mut buffer)
+                .expect("unable to read stdin");
+            buffer
+        }
     };
+    let output = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
+    let mut out = io::stdout();
+    out.write_all(&output.as_bytes())
+        .expect("unable writing into stdout");
 }
 
 // fn help_info(app: &mut App) -> String {
