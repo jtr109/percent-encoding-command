@@ -12,21 +12,20 @@ fn main() -> Result<()> {
     let matches = app.clone().get_matches();
 
     let input = match matches.value_of("input") {
-        Some(path) => {
-            fs::read_to_string(path).with_context(|| format!("cannot read input file {}", path))?
-        }
+        Some(path) => fs::read_to_string(path)
+            .with_context(|| format!("failed reading input file {}", path))?,
         None => {
             let mut buffer = String::new();
             io::stdin()
                 .read_to_string(&mut buffer)
-                .context("unable to read stdin")?;
+                .context("failed reading from stdin")?;
             buffer
         }
     };
     let output = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
     let mut out = io::stdout();
     out.write_all(&output.as_bytes())
-        .context("unable writing into stdout")?;
+        .context("failed writing into stdout")?;
     Ok(())
 }
 
