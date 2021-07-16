@@ -1,6 +1,7 @@
 use anyhow::Result;
 use clap::{load_yaml, App};
-use percent_encoding::{percent_decode_str, utf8_percent_encode, NON_ALPHANUMERIC};
+
+use percent_encoding_command::{decode, encode};
 use std::io::{self, Read, Write};
 
 fn main() -> Result<()> {
@@ -30,22 +31,6 @@ fn main() -> Result<()> {
     } else {
         encode(&mut reader, &mut writer)?;
     }
-    Ok(())
-}
-
-fn encode(reader: &mut dyn Read, writer: &mut dyn Write) -> Result<()> {
-    let mut input = String::new();
-    reader.read_to_string(&mut input)?;
-    let encoded = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
-    writer.write(encoded.as_bytes())?;
-    Ok(())
-}
-
-fn decode(reader: &mut dyn Read, writer: &mut dyn Write) -> Result<()> {
-    let mut input = String::new();
-    reader.read_to_string(&mut input)?;
-    let decoded = percent_decode_str(&input).decode_utf8()?.to_string();
-    writer.write(decoded.as_bytes())?;
     Ok(())
 }
 
