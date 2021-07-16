@@ -1,6 +1,6 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use clap::{load_yaml, App};
-use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
+use percent_encoding::{percent_decode_str, utf8_percent_encode, NON_ALPHANUMERIC};
 use std::io::{self, Read, Write};
 
 fn main() -> Result<()> {
@@ -18,7 +18,11 @@ fn main() -> Result<()> {
     let mut input = String::new();
     reader.read_to_string(&mut input)?;
 
-    let result = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
+    let result = if matches.is_present("decode") {
+        percent_decode_str(&input).decode_utf8()?.to_string()
+    } else {
+        utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string()
+    };
 
     let mut writer: Box<dyn Write> = match matches.value_of("output") {
         Some(path) => {
@@ -33,11 +37,3 @@ fn main() -> Result<()> {
     writer.write(result.as_bytes())?;
     Ok(())
 }
-
-// fn help_info(app: &mut App) -> String {
-//     let mut help = Vec::new();
-//     app.write_help(&mut help).expect("unable to write help");
-//     str::from_utf8(&help)
-//         .expect("unable converting help into string")
-//         .to_owned()
-// }
