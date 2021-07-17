@@ -20,7 +20,7 @@ fn main() -> Result<()> {
         Some(path) => {
             let file = std::fs::OpenOptions::new()
                 .write(true)
-                .create_new(true)
+                .create(true)
                 .open(path)?;
             Box::new(file)
         }

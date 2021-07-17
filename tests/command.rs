@@ -58,6 +58,36 @@ fn success_encode_with_relative_input() -> Result<()> {
     Ok(())
 }
 
-// accept output flag
+#[test]
+fn success_encode_with_output() -> Result<()> {
+    let tmp_dir = TempDir::new()?;
+    let tmp_file_path = tmp_dir.path().join("test.txt");
+    let mut cmd = Command::cargo_bin(COMMAND)?;
+    let assert = cmd
+        .write_stdin(PLAIN_TEXT)
+        .arg("--output")
+        .arg(tmp_file_path.clone())
+        .assert();
+    assert.success();
+    let content = std::fs::read_to_string(tmp_file_path)?;
+    assert_eq!(content, ENCODED);
+    Ok(())
+}
+
+#[test]
+fn success_encode_with_output_when_file_exists() -> Result<()> {
+    let tmp_file = NamedTempFile::new()?;
+    let mut cmd = Command::cargo_bin(COMMAND)?;
+    let assert = cmd
+        .write_stdin(PLAIN_TEXT)
+        .arg("--output")
+        .arg(tmp_file.path())
+        .assert();
+    assert.success();
+    let content = std::fs::read_to_string(tmp_file.path())?;
+    assert_eq!(content, ENCODED);
+    Ok(())
+}
+
 // relative output path
 // overwrite output path
