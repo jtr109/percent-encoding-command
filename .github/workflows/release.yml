@@ -41,6 +41,8 @@ jobs:
         with:
           files: |
             target/release/pct
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   crate:
     name: Crate
