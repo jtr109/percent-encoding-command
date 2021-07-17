@@ -15,3 +15,19 @@ A command for percent-encoding conversion.
 ```bash
 cargo install
 ```
+
+### Download a Binary Distribution
+
+You can download it from [the release page](https://github.com/jtr109/percent-encoding-command/releases). The binary is built on Ubuntu.
+
+Don't forget to change the access permission of the binary.
+
+```bash
+chmod +x pct
+```
+
+Then move it into you PATH, such as:
+
+```bash
+sudo mv pct /usr/local/bin
+```
