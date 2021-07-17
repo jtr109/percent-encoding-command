@@ -89,5 +89,21 @@ fn success_encode_with_output_when_file_exists() -> Result<()> {
     Ok(())
 }
 
-// relative output path
-// overwrite output path
+#[test]
+fn success_encode_with_relative_output_path() -> Result<()> {
+    let tmp_dir = TempDir::new()?;
+    std::env::set_current_dir(tmp_dir.path())?;
+    let relative_path = "test.txt";
+    let mut cmd = Command::cargo_bin(COMMAND)?;
+    let assert = cmd
+        .write_stdin(PLAIN_TEXT)
+        .arg("--output")
+        .arg(relative_path)
+        .assert();
+    assert.success();
+    let content = std::fs::read_to_string(tmp_dir.path().join(relative_path))?;
+    assert_eq!(content, ENCODED);
+    Ok(())
+}
+
+// if directory not exists
