@@ -2,7 +2,7 @@
 name = "percent-encoding-command"
 version = "0.1.4"
 edition = "2018"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 keywords = ["command", "percent-encoding", "encode", "decode"]
 description = "A command for percent-encoding conversion."
 
