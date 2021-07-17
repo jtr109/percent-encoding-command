@@ -1,14 +1,10 @@
 name: pct
-# version: "0.0.1"
 author: Ryan Li <conbas2019@gmail.com>
 args:
   - decode:
       short: d
       long: decode
       about: decodes input
-#   - break:
-#       short: b
-#       about: break encoded string into num character lines
   - input:
       short: i
       long: input
