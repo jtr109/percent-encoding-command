@@ -23,3 +23,19 @@ fn encode_works_with_stdin() -> Result<()> {
     assert.success().stdout(EXPECTED_ENCODED);
     Ok(())
 }
+
+#[test]
+fn encode_works_with_input_file() -> Result<()> {
+    let tmp_file = NamedTempFile::new()?;
+    std::fs::write(tmp_file.path(), PLAIN_TEXT)?;
+    let mut cmd = Command::cargo_bin(COMMAND)?;
+    let assert = cmd.arg("--input").arg(tmp_file.path()).assert();
+    assert.success().stdout(EXPECTED_ENCODED);
+    Ok(())
+}
+
+// accept input flag
+// accept output flag
+// relative input path
+// relative output path
+// overwrite output path
