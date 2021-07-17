@@ -1,6 +1,7 @@
 on:
   release:
-    released
+    types:
+      - released
 
 name: Release
 
