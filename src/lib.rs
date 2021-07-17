@@ -6,7 +6,7 @@ pub fn encode(reader: &mut dyn Read, writer: &mut dyn Write) -> Result<()> {
     let mut input = String::new();
     reader.read_to_string(&mut input)?;
     let encoded = utf8_percent_encode(&input, NON_ALPHANUMERIC).to_string();
-    writer.write(encoded.as_bytes())?;
+    writer.write_all(encoded.as_bytes())?;
     Ok(())
 }
 
@@ -14,7 +14,7 @@ pub fn decode(reader: &mut dyn Read, writer: &mut dyn Write) -> Result<()> {
     let mut input = String::new();
     reader.read_to_string(&mut input)?;
     let decoded = percent_decode_str(&input).decode_utf8()?.to_string();
-    writer.write(decoded.as_bytes())?;
+    writer.write_all(decoded.as_bytes())?;
     Ok(())
 }
 
