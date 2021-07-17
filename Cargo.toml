@@ -2,6 +2,9 @@
 name = "percent-encoding-command"
 version = "0.1.2"
 edition = "2018"
+license = "MIT OR Apache-2.0"
+keywords = ["command", "percent-encoding", "encode", "decode"]
+description = "A command for percent-encoding conversion."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
