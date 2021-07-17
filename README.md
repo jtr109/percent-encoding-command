@@ -14,7 +14,7 @@ A command for percent-encoding conversion.
 ### Build from source code
 
 ```bash
-cargo install
+cargo install --path .
 ```
 
 ### Download a Binary Distribution
