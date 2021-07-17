@@ -36,3 +36,8 @@ jobs:
         with:
           name: binary
           path: target/release/pct
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/release/pct
